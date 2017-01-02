@@ -28,7 +28,7 @@ except getopt.GetoptError as err:                                               
     sys.exit(2)
 
 n = 5
-f = "data/groups.xlsx"
+f = "data/groups.xlsx" # папку нужно создавать вручную
 
 for o, a in opts:                   # o - название опции, a - ее значение
     if o == "-n":
@@ -53,4 +53,13 @@ file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)  # по
 excel = Excel.ApplicationClass()
 excel.Visible = True # чтобы информация выводилась на экран
 
+workbook = excel.Workbooks.Add() #cоздаем новую пустую книгу
+sheet = workbook.ActiveSheet# метод позволяющий получит доступ к таблицам
+for i in range(len(testdata)): # вставляем тестовые данные в таблицу
+    sheet.Range["A%s" % (i+1)].Value2 = testdata[i].name #Value2 - метод хранящий значения
+
+workbook.SaveAs(file)
+
 time.sleep(10)
+
+excel.Quit()
